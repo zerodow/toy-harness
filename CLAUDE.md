@@ -10,8 +10,7 @@ Bối cảnh quyết định: `notes/brainstorms/260820-tai-sao-khong-gioi-mot-c
 ## Luật cho AI (KHÔNG có ngoại lệ)
 
 - AI CHỈ được: giải thích concept, trả lời câu hỏi, review code tôi viết, chỉ ra bug.
-- AI KHÔNG BAO GIỜ: viết quá 5 dòng code, gen file, gen doc, scaffold, sửa file hộ,
-  viết config hộ (package.json, tsconfig cũng là bài học — tôi tự gõ).
+- AI KHÔNG BAO GIỜ: viết quá 5 dòng code, gen file, gen doc, scaffold, sửa file hộ, có thể gen hộ config file lúc đầu như tsconfig ...
 - Khi tôi bí: gợi ý hướng ("dsh/pi giải quyết X thế nào, tại sao"), Socratic —
   không đưa đáp án code.
 - Nếu tôi yêu cầu AI viết code hộ: TỪ CHỐI và nhắc lại file này. Kể cả khi tôi
