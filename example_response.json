@@ -1,28 +1,74 @@
 {
-  "id": "37887b9e-ed9d-4c38-9d52-47b56e754a91",
-  "object": "chat.completion",
-  "created": 1787210644,
-  "model": "deepseek-v4-pro",
-  "choices": [
-    {
-      "index": 0,
-      "message": {
-        "role": "assistant",
-        "content": "Hello! How can I help you today?"
+  "response1":{
+    "id": "37887b9e-ed9d-4c38-9d52-47b56e754a91",
+    "object": "chat.completion",
+    "created": 1787210644,
+    "model": "deepseek-v4-pro",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "Hello! How can I help you today?"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 10,
+      "completion_tokens": 9,
+      "total_tokens": 19,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
       },
-      "logprobs": null,
-      "finish_reason": "stop"
-    }
-  ],
-  "usage": {
-    "prompt_tokens": 10,
-    "completion_tokens": 9,
-    "total_tokens": 19,
-    "prompt_tokens_details": {
-      "cached_tokens": 0
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 10
     },
-    "prompt_cache_hit_tokens": 0,
-    "prompt_cache_miss_tokens": 10
+    "system_fingerprint": "a307abda487cd1b463329ccb945ce396"
   },
-  "system_fingerprint": "a307abda487cd1b463329ccb945ce396"
+  "response2":{
+    "index": 0,
+    "message": {
+      "role": "assistant",
+      "content": `# README.md tóm tắt\n' +
+        '\n' +
+        'Đây là repo **toy-harness (toyh)** — một project học tập để tự tay build lại một CLI coding agent kiểu Claude Code, khoảng **~800 dòng TypeScript**.\n' +
+        '\n' +
+        '## Mục đích\n' +
+        '- Hiểu **harness hoạt động thế nào "từ xương"** (từ nền tảng)\n' +
+        '- Thước đo thành công là **kiến thức đọng lại trong đầu**, không phải feature list\n' +
+        '- Khác với các repo trước (kbase, ytb-summary) vốn chết vì AI gen toàn bộ code — repo này **tác giả tự gõ 100%**, AI chỉ làm tutor (theo luật trong `CLAUDE.md`). Chậm 5-10 lần được coi là **tính năng**, không phải bug.\n' +
+        '\n' +
+        '## Tại sao chọn TypeScript\n' +
+        '- Các harness đang học (dsh, Claude Code, Gemini CLI, pi) đều là TypeScript → đọc source trực tiếp cùng ngôn ngữ\n' +
+        '- Harness là orchestration IO-bound, không cần perf Rust/Go\n' +
+        '- TypeScript là ngôn ngữ mạnh nhất của tác giả (7+ năm RN) → chỉ còn **một bức tường** phải leo (harness concepts)\n' +
+        '\n' +
+        '## Roadmap 6-8 tuần (~4h/ngày)\n' +
+        '| Tuần | Milestone |\n' +
+        '|------|-----------|\n' +
+        '| 0 | Init tay: package.json, tsconfig, .env OpenRouter key |\n' +
+        '| 1 | Loop trần: fetch OpenRouter, vòng chat, tool `read_file` |\n' +
+        '| 2 | Đủ tool set: `write`, `grep`; tool-calling loop |\n' +
+        '| 3 | `bash` tool + approve gate (tuần "tường chán") |\n' +
+        '| 4 | Context management: đếm token, cắt history |\n' +
+        '| 5 | So sánh với source dsh/pi |\n' +
+        '| 6 | Polish CLI + chuẩn bị demo |\n' +
+        '| 7-8 | Buffer trượt tiến độ + sharing nội bộ SmartOSC |\n' +
+        '\n' +
+        '## Luật vận hành\n' +
+        '- Tool set v1 khóa cứng: `read`, `write`, `bash`, `grep` — không thêm trước khi v1 chạy\n'+
+        '- Chỉ đọc tài liệu just-in-time cho tuần hiện tại\n' +
+        '- Mỗi tuần ghi 1 dòng vào `notes/log/`\n' +
+        '- Phase 2 (sau v1): RN tools — biến nó thành agent phục vụ nghề mobile\n' +
+        '\n' +
+        '**Tóm lại:** Đây là một **repo học tập (learning repo)** xây dựng coding agent từ đầu bằngTypeScript để hiểu sâu cơ chế hoạt động, với triết lý "tự gõ 100%, AI chỉ làm tutor".
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+  }
 }
+
+
+ 
