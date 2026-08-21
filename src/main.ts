@@ -1,5 +1,5 @@
 import { createInterface } from "node:readline/promises";
-import { readFile } from "node:fs/promises";
+import { toolRegistry } from "./tools.js";
 interface Message {
   role: "system" | "user" | "assistant" | "tool";
   content: string | null;
@@ -11,30 +11,10 @@ async function callModel(inputMessages: Message[]): Promise<{
   finish_reason: string;
   message: Message;
 }> {
-  const tools = [
-    {
-      type: "function",
-      function: {
-        name: "read_file",
-        description: "This tool use to read file ",
-        parameters: {
-          type: "object",
-          properties: {
-            path: {
-              type: "string",
-              description: "Path of file",
-            },
-          },
-          required: ["path"],
-        },
-      },
-    },
-  ];
-
   const body = JSON.stringify({
     model: "deepseek-v4-flash",
     messages: inputMessages,
-    tools: tools,
+    tools: Object.values(toolRegistry).map((t) => t.schema),
     stream: false,
     reasoning_effort: "none",
   });
@@ -85,24 +65,50 @@ async function main() {
         console.log(choices.message.content);
 
         if (choices.finish_reason === "tool_calls") {
-          console.log("choices.message", choices.message);
           messages.push(choices.message);
           if (
             choices.message.tool_calls &&
             choices.message.tool_calls?.length > 0
           ) {
             for (const itemTools of choices.message.tool_calls) {
-              const tc = itemTools;
+              try {
+                const args = JSON.parse(itemTools.function.arguments);
 
-              const args = JSON.parse(tc.function.arguments);
+                if (!toolRegistry[itemTools.function.name]) {
+                  throw new Error(`Unknown tool: ${itemTools.function.name}`);
+                }
 
-              const contentFile = await readFile(args.path, "utf-8");
+                const toolUse = toolRegistry[itemTools.function.name];
 
-              messages.push({
-                role: "tool",
-                tool_call_id: itemTools?.id,
-                content: contentFile,
-              });
+                if (toolUse.needsApproval) {
+                  console.log(
+                    `Cho phép sử dụng tool ${itemTools.function.name} để thao tác với file ${args.path}\n Nội dung chỉnh sửa : ${args.content.slice(0, 20)}?`,
+                  );
+                  const userApprove = await rl.question("Cho phép ? (y/n)");
+                  if (userApprove !== "y") {
+                    messages.push({
+                      role: "tool",
+                      tool_call_id: itemTools?.id,
+                      content: "User denied this action",
+                    });
+                    continue;
+                  }
+                }
+
+                const contentFile = await toolUse.execute(args);
+
+                messages.push({
+                  role: "tool",
+                  tool_call_id: itemTools?.id,
+                  content: contentFile,
+                });
+              } catch (error) {
+                messages.push({
+                  role: "tool",
+                  tool_call_id: itemTools?.id,
+                  content: error + "",
+                });
+              }
             }
             continue;
           }
@@ -110,8 +116,8 @@ async function main() {
           messages.push(choices.message);
           break;
         } else {
-          console.log("else", choices)
-          break
+          console.log("else", choices);
+          break;
         }
       } catch (error) {
         console.log(error);
