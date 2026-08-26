@@ -33,8 +33,8 @@ Full context: `notes/brainstorms/260820-tai-sao-khong-gioi-mot-cai-gi.md`
 
 | Tuần | Milestone | Xong khi |
 |------|-----------|----------|
-| 0 | Init tay: package.json, tsconfig (hiểu từng field), .env OpenRouter key | `npx tsx src/main.ts` in ra "hello" |
-| 1 | Loop trần: fetch OpenRouter, vòng chat, tool `read_file` | Hỏi "file X nói gì" → agent tự đọc và trả lời |
+| 0 | Init tay: package.json, tsconfig (hiểu từng field), .env DeepSeek key | `npx tsx src/main.ts` in ra "hello" |
+| 1 | Loop trần: fetch DeepSeek API, vòng chat, tool `read_file` | Hỏi "file X nói gì" → agent tự đọc và trả lời |
 | 2 | Đủ tool set: `write`, `grep`; tool-calling loop chắc tay (schema, lỗi, retry) | Agent sửa được typo end-to-end |
 | 3 | `bash` tool + approve gate. **Tuần tường chán — biết trước, cứ đi tiếp** | Lệnh nguy hiểm phải hỏi y/n, từ chối thì loop tiếp tục tử tế |
 | 4 | Context management: đếm token, cắt history, system prompt | Hội thoại dài không vỡ context |
